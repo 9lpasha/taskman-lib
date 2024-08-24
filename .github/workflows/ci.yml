@@ -1,0 +1,36 @@
+name: CI
+
+# Определите, когда workflow должен запускаться
+on:
+  push:
+    branches: [main] # Запускать на пушах в ветку main
+  pull_request:
+    branches: [main] # Запускать на pull request в ветку main
+
+# Определите задания, которые будут выполняться
+jobs:
+  test:
+    runs-on: ubuntu-latest # Укажите на какой машине будет выполняться workflow
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3 # Загружает ваш код из репозитория
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20" # Укажите версию Node.js
+
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        run: npm install # Установка зависимостей
+
+      - name: Run tests
+        run: npm test # Запуск тестов
