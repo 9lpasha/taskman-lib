@@ -15,22 +15,21 @@ jobs:
     services:
       xvfb: # Сервис для запуска тестов в среде с доступом к X Server
         image: selenium/standalone-chrome
-        options: >
-          --shm-size=512m
+        options: --shm-size=512m
         ports:
           - 4444:4444
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3 # Загружает ваш код из репозитория
+        uses: actions/checkout@v4 # Загружает ваш код из репозитория
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: "20" # Укажите версию Node.js
 
       - name: Cache node_modules
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
