@@ -1,4 +1,5 @@
 import { TaskManager, TaskPriority } from "../src";
+import puppeteer, { Browser, Page } from "puppeteer";
 
 // Пример использования:
 const tm = new TaskManager();
@@ -25,41 +26,69 @@ const simpleTask = () => {
 };
 
 describe("Example Puppeteer Test", () => {
+  let browser: undefined | Browser;
+  let page: undefined | Page;
+
   beforeAll(async () => {
-    await page.goto("http://localhost:3000");
+    // Запуск браузера и создание новой страницы
+    browser = await puppeteer.launch();
+    page = await browser.newPage();
   });
 
-  window.onmouseenter = () => "asd";
-  console.log(navigator.hardwareConcurrency);
+  afterAll(async () => {
+    // Закрытие браузера после завершения тестов
+    if (browser) await browser.close();
+  });
 
   it("Задача с генератором должна вернуть последнее поле value итератора", async () => {
-    const task = await tm.addTask({
-      priority: TaskPriority.HIGH,
-      task: gen,
-    });
+    window.onmouseenter = () => "asd";
+    console.log(navigator.hardwareConcurrency);
 
-    expect(task).toBe(10000);
+    if (page) {
+      await page.goto("http://localhost:3000");
+
+      const result = await page.evaluate(async () => {
+        return await tm.addTask({
+          priority: TaskPriority.HIGH,
+          task: gen,
+        });
+      });
+
+      expect(result).toBe(10000);
+    }
   });
 
   it("Обычная задача в воркере", async () => {
-    const task = await tm.addTask({
-      worker: true,
-      priority: TaskPriority.HIGH,
-      task: workerTask,
-      delay: 1000,
-    });
+    if (page) {
+      await page.goto("http://localhost:3000");
 
-    expect(task).toBe("workerTask");
+      const result = await page.evaluate(async () => {
+        return await tm.addTask({
+          worker: true,
+          priority: TaskPriority.HIGH,
+          task: workerTask,
+          delay: 1000,
+        });
+      });
+
+      expect(result).toBe("workerTask");
+    }
   });
 
   it("Обычная задача", async () => {
-    const task = await tm.addTask({
-      priority: TaskPriority.HIGH,
-      task: simpleTask,
-      delay: 1000,
-    });
+    if (page) {
+      await page.goto("http://localhost:3000");
 
-    expect(task).toBe("default");
+      const result = await page.evaluate(async () => {
+        return await tm.addTask({
+          priority: TaskPriority.HIGH,
+          task: simpleTask,
+          delay: 1000,
+        });
+      });
+
+      expect(result).toBe("default");
+    }
   });
 });
 

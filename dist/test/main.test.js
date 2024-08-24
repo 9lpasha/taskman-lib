@@ -8,8 +8,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const src_1 = require("../src");
+const puppeteer_1 = __importDefault(require("puppeteer"));
 // Пример использования:
 const tm = new src_1.TaskManager();
 function* gen() {
@@ -29,34 +33,58 @@ const simpleTask = () => {
     return "default";
 };
 describe("Example Puppeteer Test", () => {
+    let browser;
+    let page;
     beforeAll(() => __awaiter(void 0, void 0, void 0, function* () {
-        yield page.goto("http://localhost:3000");
+        // Запуск браузера и создание новой страницы
+        browser = yield puppeteer_1.default.launch();
+        page = yield browser.newPage();
     }));
-    window.onmouseenter = () => "asd";
-    console.log(navigator.hardwareConcurrency);
+    afterAll(() => __awaiter(void 0, void 0, void 0, function* () {
+        // Закрытие браузера после завершения тестов
+        if (browser)
+            yield browser.close();
+    }));
     it("Задача с генератором должна вернуть последнее поле value итератора", () => __awaiter(void 0, void 0, void 0, function* () {
-        const task = yield tm.addTask({
-            priority: src_1.TaskPriority.HIGH,
-            task: gen,
-        });
-        expect(task).toBe(10000);
+        window.onmouseenter = () => "asd";
+        console.log(navigator.hardwareConcurrency);
+        if (page) {
+            yield page.goto("http://localhost:3000");
+            const result = yield page.evaluate(() => __awaiter(void 0, void 0, void 0, function* () {
+                return yield tm.addTask({
+                    priority: src_1.TaskPriority.HIGH,
+                    task: gen,
+                });
+            }));
+            expect(result).toBe(10000);
+        }
     }));
     it("Обычная задача в воркере", () => __awaiter(void 0, void 0, void 0, function* () {
-        const task = yield tm.addTask({
-            worker: true,
-            priority: src_1.TaskPriority.HIGH,
-            task: workerTask,
-            delay: 1000,
-        });
-        expect(task).toBe("workerTask");
+        if (page) {
+            yield page.goto("http://localhost:3000");
+            const result = yield page.evaluate(() => __awaiter(void 0, void 0, void 0, function* () {
+                return yield tm.addTask({
+                    worker: true,
+                    priority: src_1.TaskPriority.HIGH,
+                    task: workerTask,
+                    delay: 1000,
+                });
+            }));
+            expect(result).toBe("workerTask");
+        }
     }));
     it("Обычная задача", () => __awaiter(void 0, void 0, void 0, function* () {
-        const task = yield tm.addTask({
-            priority: src_1.TaskPriority.HIGH,
-            task: simpleTask,
-            delay: 1000,
-        });
-        expect(task).toBe("default");
+        if (page) {
+            yield page.goto("http://localhost:3000");
+            const result = yield page.evaluate(() => __awaiter(void 0, void 0, void 0, function* () {
+                return yield tm.addTask({
+                    priority: src_1.TaskPriority.HIGH,
+                    task: simpleTask,
+                    delay: 1000,
+                });
+            }));
+            expect(result).toBe("default");
+        }
     }));
 });
 // let n1 = 0;
