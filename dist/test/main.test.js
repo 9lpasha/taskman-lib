@@ -45,9 +45,9 @@ describe("Example Puppeteer Test", () => {
     }));
     it("Задача с генератором должна вернуть последнее поле value итератора", () => __awaiter(void 0, void 0, void 0, function* () {
         if (page) {
-            const tm = new src_1.TaskManager();
             yield page.goto("http://localhost:3000");
             const result = yield page.evaluate(() => __awaiter(void 0, void 0, void 0, function* () {
+                const tm = new src_1.TaskManager();
                 return yield tm.addTask({
                     priority: src_1.TaskPriority.HIGH,
                     task: gen,
@@ -58,9 +58,9 @@ describe("Example Puppeteer Test", () => {
     }));
     it("Обычная задача в воркере", () => __awaiter(void 0, void 0, void 0, function* () {
         if (page) {
-            const tm = new src_1.TaskManager();
             yield page.goto("http://localhost:3000");
             const result = yield page.evaluate(() => __awaiter(void 0, void 0, void 0, function* () {
+                const tm = new src_1.TaskManager();
                 return yield tm.addTask({
                     worker: true,
                     priority: src_1.TaskPriority.HIGH,
@@ -73,9 +73,9 @@ describe("Example Puppeteer Test", () => {
     }));
     it("Обычная задача", () => __awaiter(void 0, void 0, void 0, function* () {
         if (page) {
-            const tm = new src_1.TaskManager();
             yield page.goto("http://localhost:3000");
             const result = yield page.evaluate(() => __awaiter(void 0, void 0, void 0, function* () {
+                const tm = new src_1.TaskManager();
                 return yield tm.addTask({
                     priority: src_1.TaskPriority.HIGH,
                     task: simpleTask,

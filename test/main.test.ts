@@ -39,11 +39,11 @@ describe("Example Puppeteer Test", () => {
 
   it("Задача с генератором должна вернуть последнее поле value итератора", async () => {
     if (page) {
-      const tm = new TaskManager();
-
       await page.goto("http://localhost:3000");
 
       const result = await page.evaluate(async () => {
+        const tm = new TaskManager();
+
         return await tm.addTask({
           priority: TaskPriority.HIGH,
           task: gen,
@@ -56,11 +56,11 @@ describe("Example Puppeteer Test", () => {
 
   it("Обычная задача в воркере", async () => {
     if (page) {
-      const tm = new TaskManager();
-
       await page.goto("http://localhost:3000");
 
       const result = await page.evaluate(async () => {
+        const tm = new TaskManager();
+
         return await tm.addTask({
           worker: true,
           priority: TaskPriority.HIGH,
@@ -75,11 +75,11 @@ describe("Example Puppeteer Test", () => {
 
   it("Обычная задача", async () => {
     if (page) {
-      const tm = new TaskManager();
-
       await page.goto("http://localhost:3000");
 
       const result = await page.evaluate(async () => {
+        const tm = new TaskManager();
+
         return await tm.addTask({
           priority: TaskPriority.HIGH,
           task: simpleTask,
