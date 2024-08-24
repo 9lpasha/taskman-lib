@@ -12,6 +12,14 @@ jobs:
   test:
     runs-on: ubuntu-latest # Укажите на какой машине будет выполняться workflow
 
+    services:
+      xvfb: # Сервис для запуска тестов в среде с доступом к X Server
+        image: selenium/standalone-chrome
+        options: >
+          --shm-size 2g
+        ports:
+          - 4444:4444
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3 # Загружает ваш код из репозитория
@@ -32,5 +40,10 @@ jobs:
       - name: Install dependencies
         run: npm install # Установка зависимостей
 
+      - name: Install Puppeteer
+        run: npm install puppeteer
+
       - name: Run tests
-        run: npm test # Запуск тестов
+        run: |
+          export DISPLAY=:99.0
+          npm test
