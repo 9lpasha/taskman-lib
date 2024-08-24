@@ -29,6 +29,8 @@ describe("Example Puppeteer Test", () => {
     await page.goto("http://localhost:3000");
   });
 
+  window.onmouseenter = () => "asd";
+
   it("Задача с генератором должна вернуть последнее поле value итератора", async () => {
     const task = await tm.addTask({
       priority: TaskPriority.HIGH,
