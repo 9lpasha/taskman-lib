@@ -30,6 +30,7 @@ describe("Example Puppeteer Test", () => {
   });
 
   window.onmouseenter = () => "asd";
+  console.log(navigator.hardwareConcurrency);
 
   it("Задача с генератором должна вернуть последнее поле value итератора", async () => {
     const task = await tm.addTask({
