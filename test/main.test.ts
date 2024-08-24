@@ -1,9 +1,6 @@
 import { TaskManager, TaskPriority } from "../src";
 import puppeteer, { Browser, Page } from "puppeteer";
 
-// Пример использования:
-const tm = new TaskManager();
-
 function* gen() {
   let k = 0;
   for (let i = 0; i < 10000; i++) {
@@ -45,6 +42,8 @@ describe("Example Puppeteer Test", () => {
     console.log(navigator.hardwareConcurrency);
 
     if (page) {
+      const tm = new TaskManager();
+
       await page.goto("http://localhost:3000");
 
       const result = await page.evaluate(async () => {
@@ -60,6 +59,8 @@ describe("Example Puppeteer Test", () => {
 
   it("Обычная задача в воркере", async () => {
     if (page) {
+      const tm = new TaskManager();
+
       await page.goto("http://localhost:3000");
 
       const result = await page.evaluate(async () => {
@@ -77,6 +78,8 @@ describe("Example Puppeteer Test", () => {
 
   it("Обычная задача", async () => {
     if (page) {
+      const tm = new TaskManager();
+
       await page.goto("http://localhost:3000");
 
       const result = await page.evaluate(async () => {

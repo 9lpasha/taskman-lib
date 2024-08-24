@@ -14,8 +14,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const src_1 = require("../src");
 const puppeteer_1 = __importDefault(require("puppeteer"));
-// Пример использования:
-const tm = new src_1.TaskManager();
 function* gen() {
     let k = 0;
     for (let i = 0; i < 10000; i++) {
@@ -49,6 +47,7 @@ describe("Example Puppeteer Test", () => {
         window.onmouseenter = () => "asd";
         console.log(navigator.hardwareConcurrency);
         if (page) {
+            const tm = new src_1.TaskManager();
             yield page.goto("http://localhost:3000");
             const result = yield page.evaluate(() => __awaiter(void 0, void 0, void 0, function* () {
                 return yield tm.addTask({
@@ -61,6 +60,7 @@ describe("Example Puppeteer Test", () => {
     }));
     it("Обычная задача в воркере", () => __awaiter(void 0, void 0, void 0, function* () {
         if (page) {
+            const tm = new src_1.TaskManager();
             yield page.goto("http://localhost:3000");
             const result = yield page.evaluate(() => __awaiter(void 0, void 0, void 0, function* () {
                 return yield tm.addTask({
@@ -75,6 +75,7 @@ describe("Example Puppeteer Test", () => {
     }));
     it("Обычная задача", () => __awaiter(void 0, void 0, void 0, function* () {
         if (page) {
+            const tm = new src_1.TaskManager();
             yield page.goto("http://localhost:3000");
             const result = yield page.evaluate(() => __awaiter(void 0, void 0, void 0, function* () {
                 return yield tm.addTask({
