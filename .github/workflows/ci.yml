@@ -16,7 +16,7 @@ jobs:
       xvfb: # Сервис для запуска тестов в среде с доступом к X Server
         image: selenium/standalone-chrome
         options: >
-          --shm-size=2048m
+          --shm-size=64m
         ports:
           - 4444:4444
 
