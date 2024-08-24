@@ -20,38 +20,43 @@ function* gen() {
         yield k;
     }
 }
-test("Задача с генератором должна вернуть последнее поле value итератора", () => __awaiter(void 0, void 0, void 0, function* () {
-    const task = yield tm.addTask({
-        priority: src_1.TaskPriority.HIGH,
-        task: gen,
-    });
-    expect(task).toBe(10000);
-}));
 const workerTask = () => {
     for (let i = 0; i < 500000; i++) { }
     return "workerTask";
 };
-test("Обычная задача в воркере", () => __awaiter(void 0, void 0, void 0, function* () {
-    const task = yield tm.addTask({
-        worker: true,
-        priority: src_1.TaskPriority.HIGH,
-        task: workerTask,
-        delay: 1000,
-    });
-    expect(task).toBe("workerTask");
-}));
 const simpleTask = () => {
     for (let i = 0; i < 500000; i++) { }
     return "default";
 };
-test("Обычная задача", () => __awaiter(void 0, void 0, void 0, function* () {
-    const task = yield tm.addTask({
-        priority: src_1.TaskPriority.HIGH,
-        task: simpleTask,
-        delay: 1000,
-    });
-    expect(task).toBe("default");
-}));
+describe("Example Puppeteer Test", () => {
+    beforeAll(() => __awaiter(void 0, void 0, void 0, function* () {
+        yield page.goto("http://localhost:3000");
+    }));
+    it("Задача с генератором должна вернуть последнее поле value итератора", () => __awaiter(void 0, void 0, void 0, function* () {
+        const task = yield tm.addTask({
+            priority: src_1.TaskPriority.HIGH,
+            task: gen,
+        });
+        expect(task).toBe(10000);
+    }));
+    it("Обычная задача в воркере", () => __awaiter(void 0, void 0, void 0, function* () {
+        const task = yield tm.addTask({
+            worker: true,
+            priority: src_1.TaskPriority.HIGH,
+            task: workerTask,
+            delay: 1000,
+        });
+        expect(task).toBe("workerTask");
+    }));
+    it("Обычная задача", () => __awaiter(void 0, void 0, void 0, function* () {
+        const task = yield tm.addTask({
+            priority: src_1.TaskPriority.HIGH,
+            task: simpleTask,
+            delay: 1000,
+        });
+        expect(task).toBe("default");
+    }));
+});
 // let n1 = 0;
 // let n2 = 0;
 // setTimeout(() => {
