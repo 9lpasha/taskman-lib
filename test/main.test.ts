@@ -39,7 +39,7 @@ describe("Example Puppeteer Test", () => {
 
   it("Задача с генератором должна вернуть последнее поле value итератора", async () => {
     if (page) {
-      await page.goto("http://localhost:3000");
+      await page.goto("http://google.com");
 
       const result = await page.evaluate(async () => {
         const tm = new TaskManager();
@@ -56,7 +56,7 @@ describe("Example Puppeteer Test", () => {
 
   it("Обычная задача в воркере", async () => {
     if (page) {
-      await page.goto("http://localhost:3000");
+      await page.goto("http://google.com");
 
       const result = await page.evaluate(async () => {
         const tm = new TaskManager();
@@ -75,7 +75,7 @@ describe("Example Puppeteer Test", () => {
 
   it("Обычная задача", async () => {
     if (page) {
-      await page.goto("http://localhost:3000");
+      await page.goto("http://google.com");
 
       const result = await page.evaluate(async () => {
         const tm = new TaskManager();
