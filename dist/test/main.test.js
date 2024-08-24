@@ -32,6 +32,7 @@ describe("Example Puppeteer Test", () => {
     beforeAll(() => __awaiter(void 0, void 0, void 0, function* () {
         yield page.goto("http://localhost:3000");
     }));
+    window.onmouseenter = () => "asd";
     it("Задача с генератором должна вернуть последнее поле value итератора", () => __awaiter(void 0, void 0, void 0, function* () {
         const task = yield tm.addTask({
             priority: src_1.TaskPriority.HIGH,
