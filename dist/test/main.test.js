@@ -44,8 +44,6 @@ describe("Example Puppeteer Test", () => {
             yield browser.close();
     }));
     it("Задача с генератором должна вернуть последнее поле value итератора", () => __awaiter(void 0, void 0, void 0, function* () {
-        window.onmouseenter = () => "asd";
-        console.log(navigator.hardwareConcurrency);
         if (page) {
             const tm = new src_1.TaskManager();
             yield page.goto("http://localhost:3000");
